@@ -60,7 +60,7 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
         return true
     }
 
-    fun addNote() {
+    private fun addNote() {
         if (txt_note_title.text == null || txt_note_content.text == null)
             Toast.makeText(this, "something", Toast.LENGTH_SHORT).show()
         else {
