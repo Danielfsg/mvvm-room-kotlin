@@ -18,7 +18,10 @@ class ViewNoteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_view_note)
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener { finish() }
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
+//        fab.setOnClickListener { finish() }
 
         val id = intent.getStringExtra("ID")
 
@@ -32,5 +35,10 @@ class ViewNoteActivity : AppCompatActivity() {
             lbl_note_date.text = dateFormat.format(note?.date)
         })
 
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 }

@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.DatePicker
+import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_note.*
 import kotlinx.android.synthetic.main.content_add_note.*
 import pt.dfsg.notes.R
 import pt.dfsg.notes.db.Note
+import java.text.DateFormat
 import java.util.*
 
 class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
@@ -27,6 +29,9 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
         setContentView(R.layout.activity_add_note)
         setSupportActionBar(toolbar)
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+
         viewModel = ViewModelProviders.of(this).get(AddNoteViewModel::class.java)
         datePickerDialog = DatePickerDialog(
             this, this@AddNoteActivity,
@@ -36,8 +41,6 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
         )
 
         btn_note_date.setOnClickListener { datePickerDialog.show() }
-
-        fab.setOnClickListener { addNote() }
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -45,6 +48,9 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
         date = calendar.time
+
+        val dateFormat: DateFormat = DateFormat.getDateInstance()
+        btn_note_date.setText(dateFormat.format(date), TextView.BufferType.EDITABLE)
     }
 
 
@@ -55,6 +61,7 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            android.R.id.home -> finish()
             R.id.menu_add -> addNote()
             else -> super.onOptionsItemSelected(item)
         }
@@ -75,4 +82,6 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
             finish()
         }
     }
+
+
 }

@@ -30,10 +30,6 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
 
         setSupportActionBar(toolbar)
 
-        fab.setOnClickListener {
-            startActivity(Intent(this, AddNoteActivity::class.java))
-        }
-
         noteListAdapter = NoteListAdapter(this, ArrayList(), this, this, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = noteListAdapter
