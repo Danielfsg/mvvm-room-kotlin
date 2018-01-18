@@ -16,8 +16,10 @@ abstract class AppDatabase : RoomDatabase() {
 
         fun getDatabase(context: Context): AppDatabase? {
             if (dbInstance == null) {
-                dbInstance = Room.databaseBuilder(context.applicationContext,
-                        AppDatabase::class.java, "note-db").build()
+                dbInstance = Room.databaseBuilder(
+                    context.applicationContext,
+                    AppDatabase::class.java, "note-db"
+                ).build()
             }
             return dbInstance
         }

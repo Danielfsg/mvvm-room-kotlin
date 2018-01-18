@@ -22,8 +22,8 @@ class ViewNoteActivity : AppCompatActivity() {
 
         val id = intent.getStringExtra("ID")
 
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(application, id))
-                .get(ViewNoteViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewNoteViewModel.Factory(application, id))
+            .get(ViewNoteViewModel::class.java)
 
         viewModel.getNoteById()?.observe(this, Observer { note ->
             val dateFormat: DateFormat = DateFormat.getDateInstance()

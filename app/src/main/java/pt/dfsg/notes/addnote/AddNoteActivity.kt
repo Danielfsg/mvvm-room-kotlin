@@ -16,8 +16,8 @@ import java.util.*
 
 class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
 
-    private var calendar: Calendar = Calendar.getInstance()
-    private var date: Date = Date()
+    private var calendar = Calendar.getInstance()
+    private var date = Date()
     private lateinit var datePickerDialog: DatePickerDialog
 
     private lateinit var viewModel: AddNoteViewModel
@@ -28,10 +28,12 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
         setSupportActionBar(toolbar)
 
         viewModel = ViewModelProviders.of(this).get(AddNoteViewModel::class.java)
-        datePickerDialog = DatePickerDialog(this, this@AddNoteActivity,
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH))
+        datePickerDialog = DatePickerDialog(
+            this, this@AddNoteActivity,
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
 
         btn_note_date.setOnClickListener { datePickerDialog.show() }
 
@@ -39,7 +41,6 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-
         calendar.set(Calendar.YEAR, year)
         calendar.set(Calendar.MONTH, month)
         calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -64,10 +65,13 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener 
         if (txt_note_title.text == null || txt_note_content.text == null)
             Toast.makeText(this, "something", Toast.LENGTH_SHORT).show()
         else {
-            viewModel.addNote(Note(
+            viewModel.addNote(
+                Note(
                     title = txt_note_title.text.toString(),
                     content = txt_note_content.text.toString(),
-                    date = date))
+                    date = date
+                )
+            )
             finish()
         }
     }

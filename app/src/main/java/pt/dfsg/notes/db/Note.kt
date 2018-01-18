@@ -10,7 +10,8 @@ import java.util.*
 @Entity
 @TypeConverters(DateConverter::class)
 data class Note(
-        @PrimaryKey(autoGenerate = true) var id: Long = 0,
-        @ColumnInfo(name = "title") var title: String = "",
-        @ColumnInfo(name = "content") var content: String = "",
-        @ColumnInfo(name = "date") var date: Date = Date())
+    @PrimaryKey(autoGenerate = true) var id: Long = 0,
+    @ColumnInfo(name = "title") var title: String = "",
+    @ColumnInfo(name = "content") var content: String = "",
+    @ColumnInfo(name = "date") var date: Date = Date()
+)

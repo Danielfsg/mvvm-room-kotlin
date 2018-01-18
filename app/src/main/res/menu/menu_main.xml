@@ -2,6 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pt.dfsg.notes.listnotes.NoteListActivity">
+
+    <item
+        android:id="@+id/action_new_note"
+        android:icon="@drawable/ic_note_add_white_24dp"
+        android:orderInCategory="1"
+        android:title="Add New Note"
+        app:showAsAction="ifRoom" />
+
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

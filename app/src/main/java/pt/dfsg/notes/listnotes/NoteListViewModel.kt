@@ -25,7 +25,8 @@ class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
         DeleteAsyncTask(appDatabase).execute(note)
     }
 
-    class DeleteAsyncTask constructor(private var db: AppDatabase?) : AsyncTask<Note, Void, Void>() {
+    class DeleteAsyncTask constructor(private var db: AppDatabase?) :
+        AsyncTask<Note, Void, Void>() {
 
         override fun doInBackground(vararg params: Note): Void? {
             db?.noteDao()?.deleteNote(params[0])
