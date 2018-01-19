@@ -6,6 +6,10 @@ import android.arch.lifecycle.LiveData
 import android.os.AsyncTask
 import pt.dfsg.notes.db.AppDatabase
 import pt.dfsg.notes.db.Note
+import android.content.Intent
+import android.support.v4.content.ContextCompat.startActivity
+
+
 
 class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
 
@@ -17,7 +21,16 @@ class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
         noteList = appDatabase?.noteDao()?.allNotes()
     }
 
-    fun getAllNote(): LiveData<List<Note>>? {
+    fun shareNote(note: Note){
+
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "text/plain"
+        shareIntent.putExtra(Intent.EXTRA_TEXT, note.content)
+        val intent = Intent.createChooser(shareIntent, "Share link using")
+        startActivity(getApplication(), intent,null)
+    }
+
+    fun getAllNotes(): LiveData<List<Note>>? {
         return noteList
     }
 

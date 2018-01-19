@@ -21,7 +21,7 @@
                 android:id="@+id/lbl_note_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Note title"
+                android:text="@string/note_title"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -34,7 +34,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="6dp"
-                android:text="01/010/2018"
+                android:text="@string/test_date"
                 android:textSize="12sp" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
                 android:maxLines="5"
-                android:text="Note content"
+                android:text="@string/note_content2"
                 android:textSize="16sp" />
 
         </RelativeLayout>
@@ -57,6 +57,7 @@
             android:gravity="end">
 
             <ImageButton
+                android:id="@+id/note_share"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="5dp"
@@ -64,7 +65,8 @@
                 android:background="@null"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/ic_share_black_24dp" />
+                android:src="@drawable/ic_share_black_24dp"
+                android:contentDescription="@string/share" />
 
             <ImageButton
                 android:id="@+id/note_edit"
@@ -75,7 +77,8 @@
                 android:background="@null"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/ic_mode_edit_black_24dp" />
+                android:src="@drawable/ic_mode_edit_black_24dp"
+                android:contentDescription="@string/edit" />
 
             <ImageButton
                 android:id="@+id/note_delete"
@@ -85,7 +88,8 @@
                 android:background="@null"
                 android:clickable="true"
                 android:focusable="true"
-                android:src="@drawable/ic_delete_black_24dp" />
+                android:src="@drawable/ic_delete_black_24dp"
+                android:contentDescription="@string/delete" />
 
         </LinearLayout>
     </LinearLayout>

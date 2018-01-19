@@ -1,11 +1,19 @@
 <resources>
     <string name="app_name">Notes</string>
-    <string name="action_settings">Settings</string>
-    <string name="title_activity_add_note">AddNoteActivity</string>
+    <string name="title_activity_add_note">Add Note</string>
+    <string name="title_activity_view_note">View Note</string>
+    <string name="title_activity_edit_note">Edit Note</string>
 
-    <!--  add note view -->
-    <string name="note_title">Title</string>
-    <string name="note_content">Content</string>
+    <string name="action_settings">Settings</string>
+    <string name="title">Title</string>
+    <string name="content">Content</string>
     <string name="set_date">Set Date</string>
-    <string name="title_activity_view_note">ViewNoteActivity</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="share">Share</string>
+    <string name="note_title">Note title</string>
+    <string name="test_date">01/10/2018</string>
+    <string name="note_content2">Note content</string>
+    <string name="done">Done</string>
+    <string name="add_new_note">Add New Note</string>
 </resources>

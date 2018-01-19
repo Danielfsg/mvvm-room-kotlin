@@ -27,6 +27,10 @@
             android:name=".viewnote.ViewNoteActivity"
             android:label="@string/title_activity_view_note"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".editnote.EditNoteActivity"
+            android:label="@string/title_activity_view_note"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

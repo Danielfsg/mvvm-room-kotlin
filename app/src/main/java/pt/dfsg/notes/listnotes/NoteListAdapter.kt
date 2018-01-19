@@ -30,6 +30,8 @@ class NoteListAdapter(
         holder.itemView.tag = noteList[position]
         holder.itemView.setOnClickListener(onClickListener)
         holder.itemView.setOnLongClickListener(onLongClickListener)
+        holder.itemView.note_share.setOnClickListener {
+            clickCallBacks.onShareClick(noteList[position]) }
         holder.itemView.note_edit.setOnClickListener {
             clickCallBacks.onNoteEditClick(noteList[position]) }
         holder.itemView.note_delete.setOnClickListener {
@@ -56,6 +58,7 @@ class NoteListAdapter(
     }
 
     interface ClickCallBacks {
+        fun onShareClick(note: Note)
         fun onNoteEditClick(note: Note)
         fun onNoteDeleteClick(note: Note)
     }

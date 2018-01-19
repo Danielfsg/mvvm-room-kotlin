@@ -15,6 +15,7 @@ import kotlinx.android.synthetic.main.content_main.*
 import pt.dfsg.notes.R
 import pt.dfsg.notes.addnote.AddNoteActivity
 import pt.dfsg.notes.db.Note
+import pt.dfsg.notes.editnote.EditNoteActivity
 import pt.dfsg.notes.viewnote.ViewNoteActivity
 import java.util.*
 
@@ -35,7 +36,7 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
         recyclerView.adapter = noteListAdapter
 
         viewModel = ViewModelProviders.of(this).get(NoteListViewModel::class.java)
-        viewModel.getAllNote()?.observe(this,
+        viewModel.getAllNotes()?.observe(this,
             Observer { note -> note?.let { noteListAdapter.addNotes(it) } })
     }
 
@@ -52,7 +53,13 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
     }
 
     override fun onNoteEditClick(note: Note) {
-        Toast.makeText(this, "TO DO EDIT", Toast.LENGTH_SHORT).show()
+        val intent = Intent(this@NoteListActivity, EditNoteActivity::class.java)
+        intent.putExtra("ID", note.id.toString())
+        startActivity(intent)
+    }
+
+    override fun onShareClick(note: Note) {
+        viewModel.shareNote(note)
     }
 
     override fun onNoteDeleteClick(note: Note) {
