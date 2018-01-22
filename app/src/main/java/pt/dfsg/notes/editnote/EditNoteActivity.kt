@@ -4,24 +4,31 @@ import android.app.DatePickerDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
+import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_note.*
 import kotlinx.android.synthetic.main.content_add_note.*
+import kotlinx.android.synthetic.main.note_item.view.*
 import pt.dfsg.notes.R
 import pt.dfsg.notes.db.Note
 import java.text.DateFormat
 import java.util.*
 
-class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
+class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
+    View.OnClickListener {
 
     private var calendar = Calendar.getInstance()
 
     private var date = Date()
+
+    private var color: Int = 0
 
     private val dateFormat: DateFormat = DateFormat.getDateInstance()
 
@@ -54,6 +61,12 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         )
 
         btn_note_date.setOnClickListener { datePickerDialog.show() }
+
+        note_color_white.setOnClickListener(this)
+        note_color_red.setOnClickListener(this)
+        note_color_green.setOnClickListener(this)
+        note_color_blue.setOnClickListener(this)
+        note_color_yellow.setOnClickListener(this)
     }
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
@@ -80,10 +93,37 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         return true
     }
 
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.note_color_white -> {
+                color = ContextCompat.getColor(this, R.color.White)
+                cardView.setCardBackgroundColor(color)
+            }
+            R.id.note_color_red -> {
+                color = ContextCompat.getColor(this, R.color.Red)
+                cardView.setCardBackgroundColor(color)
+            }
+            R.id.note_color_green -> {
+                color = ContextCompat.getColor(this, R.color.Green)
+                cardView.setCardBackgroundColor(color)
+            }
+            R.id.note_color_blue -> {
+                color = ContextCompat.getColor(this, R.color.Blue)
+                cardView.setCardBackgroundColor(color)
+            }
+            R.id.note_color_yellow -> {
+                color = ContextCompat.getColor(this, R.color.Yellow)
+                cardView.setCardBackgroundColor(color)
+            }
+        }
+    }
+
     private fun setNote(note: Note) {
         txt_note_title.setText(note.title, TextView.BufferType.EDITABLE)
         txt_note_content.setText(note.content, TextView.BufferType.EDITABLE)
         btn_note_date.setText(dateFormat.format(note.date), TextView.BufferType.EDITABLE)
+        cardView.setCardBackgroundColor(note.color)
+        color = note.color
     }
 
     private fun updateNote() {
@@ -95,7 +135,8 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                     id = id.toLong(),
                     title = txt_note_title.text.toString(),
                     content = txt_note_content.text.toString(),
-                    date = date
+                    date = date,
+                    color = color
                 )
             )
             finish()

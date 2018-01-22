@@ -4,4 +4,11 @@
     <color name="primaryLightColor">#8e8e8e</color>
     <color name="primaryDarkColor">#373737</color>
     <color name="primaryTextColor">#ffffff</color>
+
+    <color name="White">#ffffff</color>
+    <color name="Red">#7fff0000</color>
+    <color name="Green">#7f00ff00</color>
+    <color name="Blue">#7f8f8ff9</color>
+    <color name="Yellow">#7ffff200</color>
+
 </resources>

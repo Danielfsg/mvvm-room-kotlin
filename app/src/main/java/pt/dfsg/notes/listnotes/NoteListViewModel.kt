@@ -26,7 +26,7 @@ class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "text/plain"
         shareIntent.putExtra(Intent.EXTRA_TEXT, note.content)
-        val intent = Intent.createChooser(shareIntent, "Share link using")
+        val intent = Intent.createChooser(shareIntent, "Share note using")
         startActivity(getApplication(), intent,null)
     }
 

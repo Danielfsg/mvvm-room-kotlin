@@ -31,11 +31,14 @@ class NoteListAdapter(
         holder.itemView.setOnClickListener(onClickListener)
         holder.itemView.setOnLongClickListener(onLongClickListener)
         holder.itemView.note_share.setOnClickListener {
-            clickCallBacks.onShareClick(noteList[position]) }
+            clickCallBacks.onShareClick(noteList[position])
+        }
         holder.itemView.note_edit.setOnClickListener {
-            clickCallBacks.onNoteEditClick(noteList[position]) }
+            clickCallBacks.onNoteEditClick(noteList[position])
+        }
         holder.itemView.note_delete.setOnClickListener {
-            clickCallBacks.onNoteDeleteClick(noteList[position]) }
+            clickCallBacks.onNoteDeleteClick(noteList[position])
+        }
 
     }
 
@@ -54,6 +57,8 @@ class NoteListAdapter(
             itemView.lbl_note_title.text = note.title
             itemView.lbl_note_content.text = note.content
             itemView.lbl_note_date.text = dateFormat.format(note.date)
+
+            itemView.cardView.setCardBackgroundColor(note.color)
         }
     }
 
