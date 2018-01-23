@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
@@ -48,7 +49,7 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
     }
 
     override fun onLongClick(v: View?): Boolean {
-        viewModel.deleteNote(v?.tag as Note)
+        confirmDelete(v?.tag as Note)
         return true
     }
 
@@ -63,7 +64,7 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
     }
 
     override fun onNoteDeleteClick(note: Note) {
-        viewModel.deleteNote(note)
+        confirmDelete(note)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -73,10 +74,28 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_new_note -> startActivity(Intent(this, AddNoteActivity::class.java))
+            R.id.action_new_note -> startActivity(
+                Intent(
+                    this@NoteListActivity,
+                    AddNoteActivity::class.java
+                )
+            )
             R.id.action_settings -> Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
             else -> super.onOptionsItemSelected(item)
         }
         return true
+    }
+
+    private fun confirmDelete(note: Note) {
+        val alertDialog = AlertDialog.Builder(this@NoteListActivity).create()
+        alertDialog.setTitle("Alert")
+        alertDialog.setMessage("Do you want to delete this note?")
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", { _, _ ->
+            viewModel.deleteNote(note)
+        })
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", { _, _ ->
+            alertDialog.dismiss()
+        })
+        alertDialog.show()
     }
 }

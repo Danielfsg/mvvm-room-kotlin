@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.DatePicker
 import android.widget.TextView
 import android.widget.Toast
+import com.shashank.sony.fancytoastlib.FancyToast
 import kotlinx.android.synthetic.main.activity_add_note.*
 import kotlinx.android.synthetic.main.content_add_note.*
 import pt.dfsg.notes.R
@@ -82,26 +83,26 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.note_color_white -> {
-                color = ContextCompat.getColor(this, R.color.White)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.White)
             }
             R.id.note_color_red -> {
-                color = ContextCompat.getColor(this, R.color.Red)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.Red)
             }
             R.id.note_color_green -> {
-                color = ContextCompat.getColor(this, R.color.Green)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.Green)
             }
             R.id.note_color_blue -> {
-                color = ContextCompat.getColor(this, R.color.Blue)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.Blue)
             }
             R.id.note_color_yellow -> {
-                color = ContextCompat.getColor(this, R.color.Yellow)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.Yellow)
             }
         }
+    }
+
+    private fun setColor(value: Int) {
+        color = ContextCompat.getColor(this, value)
+        cardView.setCardBackgroundColor(value)
     }
 
     private fun addNote() {
@@ -117,9 +118,18 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                     color = color
                 )
             )
+            FancyToast.makeText(
+                this,
+                "Note Added",
+                FancyToast.LENGTH_SHORT,
+                FancyToast.SUCCESS,
+                false
+            ).show()
             finish()
         }
     }
+
+
 
 
 }
