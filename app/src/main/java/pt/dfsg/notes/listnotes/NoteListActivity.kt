@@ -2,17 +2,15 @@ package pt.dfsg.notes.listnotes
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
+import org.jetbrains.anko.*
 import pt.dfsg.notes.R
 import pt.dfsg.notes.addnote.AddNoteActivity
 import pt.dfsg.notes.db.Note
@@ -20,8 +18,9 @@ import pt.dfsg.notes.editnote.EditNoteActivity
 import pt.dfsg.notes.viewnote.ViewNoteActivity
 import java.util.*
 
-class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongClickListener,
+class NoteListActivity : AppCompatActivity(), View.OnClickListener,
     NoteListAdapter.ClickCallBacks {
+
 
     private lateinit var noteListAdapter: NoteListAdapter
     private lateinit var viewModel: NoteListViewModel
@@ -32,7 +31,7 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
 
         setSupportActionBar(toolbar)
 
-        noteListAdapter = NoteListAdapter(this, ArrayList(), this, this, this)
+        noteListAdapter = NoteListAdapter(this, ArrayList(), this, this)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = noteListAdapter
 
@@ -41,26 +40,24 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
             Observer { note -> note?.let { noteListAdapter.addNotes(it) } })
     }
 
-    override fun onClick(v: View?) {
-        val note = v?.tag as Note
-        val intent = Intent(this@NoteListActivity, ViewNoteActivity::class.java)
-        intent.putExtra("ID", note.id.toString())
-        startActivity(intent)
+    private fun confirmDelete(note: Note) {
+        alert("Do you want to delete this note?") {
+            yesButton { viewModel.deleteNoteAnko(note) }
+            noButton { }
+        }.show()
     }
 
-    override fun onLongClick(v: View?): Boolean {
-        confirmDelete(v?.tag as Note)
-        return true
+    override fun onClick(v: View?) {
+        val note = v?.tag as Note
+        startActivity<ViewNoteActivity>("ID" to note.id.toString())
     }
 
     override fun onNoteEditClick(note: Note) {
-        val intent = Intent(this@NoteListActivity, EditNoteActivity::class.java)
-        intent.putExtra("ID", note.id.toString())
-        startActivity(intent)
+        startActivity<EditNoteActivity>("ID" to note.id.toString())
     }
 
     override fun onShareClick(note: Note) {
-        viewModel.shareNote(note)
+        share(note.content,note.title)
     }
 
     override fun onNoteDeleteClick(note: Note) {
@@ -74,28 +71,11 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener, View.OnLongC
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.action_new_note -> startActivity(
-                Intent(
-                    this@NoteListActivity,
-                    AddNoteActivity::class.java
-                )
-            )
-            R.id.action_settings -> Toast.makeText(this, "TODO", Toast.LENGTH_SHORT).show()
+            R.id.action_new_note -> startActivity<AddNoteActivity>()
+            R.id.action_settings -> toast("TODO")
             else -> super.onOptionsItemSelected(item)
         }
         return true
     }
 
-    private fun confirmDelete(note: Note) {
-        val alertDialog = AlertDialog.Builder(this@NoteListActivity).create()
-        alertDialog.setTitle("Alert")
-        alertDialog.setMessage("Do you want to delete this note?")
-        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "YES", { _, _ ->
-            viewModel.deleteNote(note)
-        })
-        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "NO", { _, _ ->
-            alertDialog.dismiss()
-        })
-        alertDialog.show()
-    }
 }

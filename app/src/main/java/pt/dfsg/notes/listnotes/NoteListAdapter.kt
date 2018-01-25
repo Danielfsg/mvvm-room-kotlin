@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.note_item.view.*
+import org.jetbrains.anko.sdk25.coroutines.onClick
 import pt.dfsg.notes.R
 import pt.dfsg.notes.db.Note
 import java.text.DateFormat
@@ -15,8 +16,7 @@ class NoteListAdapter(
     var context: Context,
     private var noteList: List<Note>,
     private var clickCallBacks: NoteListAdapter.ClickCallBacks,
-    private var onClickListener: View.OnClickListener,
-    private var onLongClickListener: NoteListActivity
+    private var onClickListener: View.OnClickListener
 ) : RecyclerView.Adapter<NoteListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
@@ -27,18 +27,6 @@ class NoteListAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(noteList[position])
-        holder.itemView.tag = noteList[position]
-        holder.itemView.setOnClickListener(onClickListener)
-        holder.itemView.setOnLongClickListener(onLongClickListener)
-        holder.itemView.note_share.setOnClickListener {
-            clickCallBacks.onShareClick(noteList[position])
-        }
-        holder.itemView.note_edit.setOnClickListener {
-            clickCallBacks.onNoteEditClick(noteList[position])
-        }
-        holder.itemView.note_delete.setOnClickListener {
-            clickCallBacks.onNoteDeleteClick(noteList[position])
-        }
 
     }
 
@@ -57,6 +45,17 @@ class NoteListAdapter(
             itemView.lbl_note_title.text = note.title
             itemView.lbl_note_content.text = note.content
             itemView.lbl_note_date.text = dateFormat.format(note.date)
+            itemView.tag = note
+            itemView.setOnClickListener(onClickListener)
+            itemView.note_share.setOnClickListener {
+                clickCallBacks.onShareClick(note)
+            }
+            itemView.note_edit.setOnClickListener {
+                clickCallBacks.onNoteEditClick(note)
+            }
+            itemView.note_delete.setOnClickListener {
+                clickCallBacks.onNoteDeleteClick(note)
+            }
 
             itemView.cardView.setCardBackgroundColor(note.color)
         }

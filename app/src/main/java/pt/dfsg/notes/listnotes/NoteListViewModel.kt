@@ -3,12 +3,11 @@ package pt.dfsg.notes.listnotes
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
-import android.os.AsyncTask
+import android.content.Context
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.share
 import pt.dfsg.notes.db.AppDatabase
 import pt.dfsg.notes.db.Note
-import android.content.Intent
-import android.support.v4.content.ContextCompat.startActivity
-
 
 
 class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
@@ -21,29 +20,33 @@ class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
         noteList = appDatabase?.noteDao()?.allNotes()
     }
 
-    fun shareNote(note: Note){
-
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "text/plain"
-        shareIntent.putExtra(Intent.EXTRA_TEXT, note.content)
-        val intent = Intent.createChooser(shareIntent, "Share note using")
-        startActivity(getApplication(), intent,null)
-    }
+//    fun shareNote(note: Note) {
+////        val shareIntent = Intent(Intent.ACTION_SEND)
+////        shareIntent.type = "text/plain"
+////        shareIntent.putExtra(Intent.EXTRA_TEXT, note.content)
+////        val intent = Intent.createChooser(shareIntent, "Share note using")
+////        startActivity(getApplication(), intent, null)
+//
+//    }
 
     fun getAllNotes(): LiveData<List<Note>>? {
         return noteList
     }
 
-    fun deleteNote(note: Note) {
-        DeleteAsyncTask(appDatabase).execute(note)
+    fun deleteNoteAnko(note: Note) {
+        doAsync { appDatabase?.noteDao()?.deleteNote(note) }
     }
 
-    class DeleteAsyncTask constructor(private var db: AppDatabase?) :
-        AsyncTask<Note, Void, Void>() {
-
-        override fun doInBackground(vararg params: Note): Void? {
-            db?.noteDao()?.deleteNote(params[0])
-            return null
-        }
-    }
+//    fun deleteNote(note: Note) {
+//        DeleteAsyncTask(appDatabase).execute(note)
+//    }
+//
+//    class DeleteAsyncTask constructor(private var db: AppDatabase?) :
+//        AsyncTask<Note, Void, Void>() {
+//
+//        override fun doInBackground(vararg params: Note): Void? {
+//            db?.noteDao()?.deleteNote(params[0])
+//            return null
+//        }
+//    }
 }

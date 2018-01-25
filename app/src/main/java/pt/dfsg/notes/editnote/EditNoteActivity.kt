@@ -130,7 +130,7 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         if (txt_note_title.text == null || txt_note_content.text == null)
             Toast.makeText(this, "something", Toast.LENGTH_SHORT).show()
         else {
-            viewModel.updateNote(
+            viewModel.updateNoteAnko(
                 Note(
                     id = id.toLong(),
                     title = txt_note_title.text.toString(),
