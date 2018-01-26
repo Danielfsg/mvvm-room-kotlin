@@ -64,6 +64,27 @@
             android:gravity="end"
             app:layout_constraintTop_toBottomOf="@id/lbl_note_content">
 
+            <TextView
+                android:id="@+id/note_reminder_date"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="8dp"
+                android:gravity="center"
+                android:background="@null"
+                tools:text="23:59:59" />
+
+            <ImageButton
+                android:id="@+id/note_reminder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:background="@null"
+                android:clickable="true"
+                android:contentDescription="@string/reminder"
+                android:focusable="true"
+                android:padding="5dp"
+                android:src="@drawable/ic_alarm_black_24dp" />
+
             <ImageButton
                 android:id="@+id/note_share"
                 android:layout_width="wrap_content"

@@ -16,4 +16,9 @@
     <string name="note_content2">Note content</string>
     <string name="done">Done</string>
     <string name="add_new_note">Add New Note</string>
+    <string name="reminder">reminder</string>
+
+
+    <string name="noti_channel_default">Default Channel</string>
+    <string name="noti_channel_second">Secondary Channel</string>
 </resources>

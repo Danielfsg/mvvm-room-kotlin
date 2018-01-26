@@ -5,19 +5,17 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
-import android.support.v4.content.res.ResourcesCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.DatePicker
 import android.widget.TextView
-import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_add_note.*
 import kotlinx.android.synthetic.main.content_add_note.*
-import kotlinx.android.synthetic.main.note_item.view.*
 import pt.dfsg.notes.R
 import pt.dfsg.notes.db.Note
+import pt.dfsg.notes.utils.ID
 import java.text.DateFormat
 import java.util.*
 
@@ -25,17 +23,12 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     View.OnClickListener {
 
     private var calendar = Calendar.getInstance()
-
     private var date = Date()
-
     private var color: Int = 0
-
     private val dateFormat: DateFormat = DateFormat.getDateInstance()
-
     private var id: String = String()
 
     private lateinit var datePickerDialog: DatePickerDialog
-
     private lateinit var viewModel: EditNoteViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +39,7 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        id = intent.getStringExtra("ID")
+        id = intent.getStringExtra(ID)
 
         viewModel = ViewModelProviders.of(this, EditNoteViewModel.Factory(application, id))
             .get(EditNoteViewModel::class.java)
@@ -127,20 +120,17 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     }
 
     private fun updateNote() {
-        if (txt_note_title.text == null || txt_note_content.text == null)
-            Toast.makeText(this, "something", Toast.LENGTH_SHORT).show()
-        else {
-            viewModel.updateNoteAnko(
-                Note(
-                    id = id.toLong(),
-                    title = txt_note_title.text.toString(),
-                    content = txt_note_content.text.toString(),
-                    date = date,
-                    color = color
-                )
+        viewModel.updateNoteAnko(
+            Note(
+                id = id.toLong(),
+                title = txt_note_title.text.toString(),
+                content = txt_note_content.text.toString(),
+                date = date,
+                color = color
             )
-            finish()
-        }
+        )
+        finish()
     }
 }
+
 

@@ -5,7 +5,6 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import android.os.AsyncTask
 import org.jetbrains.anko.doAsync
 import pt.dfsg.notes.db.AppDatabase
 import pt.dfsg.notes.db.Note
@@ -24,21 +23,9 @@ class EditNoteViewModel constructor(id: String, app: Application) : AndroidViewM
         return note
     }
 
-    fun updateNoteAnko(note:Note){
+    fun updateNoteAnko(note: Note) {
         doAsync { appDatabase?.noteDao()?.update(note) }
     }
-
-//    fun updateNote(note: Note) {
-//        UpdateAsyncTask(appDatabase).execute(note)
-//    }
-//
-//    class UpdateAsyncTask constructor(private var db: AppDatabase?) : AsyncTask<Note, Void, Void>() {
-//
-//        override fun doInBackground(vararg params: Note): Void? {
-//            db?.noteDao()?.update(params[0])
-//            return null
-//        }
-//    }
 
     class Factory constructor(private var app: Application, private var params: String) :
         ViewModelProvider.NewInstanceFactory() {
@@ -48,4 +35,19 @@ class EditNoteViewModel constructor(id: String, app: Application) : AndroidViewM
             return EditNoteViewModel(params, app) as T
         }
     }
+
+    /* old update async task
+fun updateNote(note: Note) {
+    UpdateAsyncTask(appDatabase).execute(note)
+}
+
+class UpdateAsyncTask constructor(private var db: AppDatabase?) : AsyncTask<Note, Void, Void>() {
+
+    override fun doInBackground(vararg params: Note): Void? {
+        db?.noteDao()?.update(params[0])
+        return null
+    }
+}
+*/
+
 }

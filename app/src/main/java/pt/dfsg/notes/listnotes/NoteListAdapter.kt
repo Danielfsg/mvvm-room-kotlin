@@ -6,10 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.note_item.view.*
-import org.jetbrains.anko.sdk25.coroutines.onClick
 import pt.dfsg.notes.R
 import pt.dfsg.notes.db.Note
 import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class NoteListAdapter(
@@ -41,21 +42,21 @@ class NoteListAdapter(
 
         fun bind(note: Note) {
             val dateFormat: DateFormat = DateFormat.getDateInstance()
+            val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
             itemView.lbl_note_title.text = note.title
             itemView.lbl_note_content.text = note.content
             itemView.lbl_note_date.text = dateFormat.format(note.date)
+            if (note.hasReminder && note.reminder!! > Calendar.getInstance().time)
+                itemView.note_reminder_date.text = timeFormat.format(note.reminder)
+            else
+                itemView.note_reminder_date.text = String()
             itemView.tag = note
             itemView.setOnClickListener(onClickListener)
-            itemView.note_share.setOnClickListener {
-                clickCallBacks.onShareClick(note)
-            }
-            itemView.note_edit.setOnClickListener {
-                clickCallBacks.onNoteEditClick(note)
-            }
-            itemView.note_delete.setOnClickListener {
-                clickCallBacks.onNoteDeleteClick(note)
-            }
+            itemView.note_share.setOnClickListener { clickCallBacks.onShareClick(note) }
+            itemView.note_edit.setOnClickListener { clickCallBacks.onNoteEditClick(note) }
+            itemView.note_delete.setOnClickListener { clickCallBacks.onNoteDeleteClick(note) }
+            itemView.note_reminder.setOnClickListener { clickCallBacks.onSetReminderClick(note) }
 
             itemView.cardView.setCardBackgroundColor(note.color)
         }
@@ -65,5 +66,6 @@ class NoteListAdapter(
         fun onShareClick(note: Note)
         fun onNoteEditClick(note: Note)
         fun onNoteDeleteClick(note: Note)
+        fun onSetReminderClick(note: Note)
     }
 }

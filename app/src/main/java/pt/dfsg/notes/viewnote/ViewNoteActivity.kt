@@ -8,6 +8,7 @@ import kotlinx.android.synthetic.main.activity_view_note.*
 import kotlinx.android.synthetic.main.content_view_note.*
 import pt.dfsg.notes.R
 import pt.dfsg.notes.db.Note
+import pt.dfsg.notes.utils.ID
 import java.text.DateFormat
 
 class ViewNoteActivity : AppCompatActivity() {
@@ -23,7 +24,7 @@ class ViewNoteActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
 
-        val id = intent.getStringExtra("ID")
+        val id = intent.getStringExtra(ID)
 
         viewModel = ViewModelProviders.of(this, ViewNoteViewModel.Factory(application, id))
             .get(ViewNoteViewModel::class.java)
