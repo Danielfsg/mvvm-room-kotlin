@@ -1,6 +1,5 @@
 package pt.dfsg.notes.listnotes
 
-import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -10,8 +9,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.DatePicker
-import android.widget.TimePicker
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import org.jetbrains.anko.*
@@ -52,7 +49,7 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener,
 
     private fun confirmDelete(note: Note) {
         alert("Do you want to delete this note?") {
-            yesButton { viewModel.deleteNoteAnko(note) }
+            yesButton { viewModel.deleteNote(note) }
             noButton { }
         }.show()
     }
@@ -103,7 +100,7 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener,
                 calendar.set(Calendar.HOUR_OF_DAY, selectedHour)
                 calendar.set(Calendar.MINUTE, selectedMinute)
                 viewModel.setAlarm(this, calendar.timeInMillis, "Reminder", note.title)
-                viewModel.updateNoteAnko(note.copy(hasReminder = true, reminder = calendar.time))
+                viewModel.updateNote(note.copy(hasReminder = true, reminder = calendar.time))
                 toast("alarm set for $selectedHour:$selectedMinute")
             }, hour, minute, true
         ).show()

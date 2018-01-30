@@ -5,7 +5,8 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel
 import android.arch.lifecycle.ViewModelProvider
-import org.jetbrains.anko.doAsync
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
 import pt.dfsg.notes.db.AppDatabase
 import pt.dfsg.notes.db.Note
 
@@ -23,8 +24,8 @@ class EditNoteViewModel constructor(id: String, app: Application) : AndroidViewM
         return note
     }
 
-    fun updateNoteAnko(note: Note) {
-        doAsync { appDatabase?.noteDao()?.update(note) }
+    fun updateNote(note: Note) {
+        async(CommonPool) { appDatabase?.noteDao()?.update(note) }.start()
     }
 
     class Factory constructor(private var app: Application, private var params: String) :
@@ -38,6 +39,7 @@ class EditNoteViewModel constructor(id: String, app: Application) : AndroidViewM
 
     /* old update async task
 fun updateNote(note: Note) {
+    doAsync { appDatabase?.noteDao()?.update(note) }
     UpdateAsyncTask(appDatabase).execute(note)
 }
 

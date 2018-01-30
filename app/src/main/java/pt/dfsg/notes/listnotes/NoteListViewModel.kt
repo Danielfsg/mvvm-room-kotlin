@@ -7,7 +7,8 @@ import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.content.Context
 import android.content.Intent
-import org.jetbrains.anko.doAsync
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.async
 import pt.dfsg.notes.db.AppDatabase
 import pt.dfsg.notes.db.Note
 import pt.dfsg.notes.notification.AlarmReceiver
@@ -29,14 +30,13 @@ class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
         return noteList
     }
 
-    fun deleteNoteAnko(note: Note) {
-        doAsync { appDatabase?.noteDao()?.deleteNote(note) }
+    fun deleteNote(note: Note) {
+        async(CommonPool) { appDatabase?.noteDao()?.deleteNote(note) }.start()
     }
 
-    fun updateNoteAnko(note: Note) {
-        doAsync { appDatabase?.noteDao()?.update(note) }
+    fun updateNote(note: Note) {
+        async(CommonPool) { appDatabase?.noteDao()?.update(note) }.start()
     }
-
 
     fun setAlarm(context: Context, alertTime: Long, title: String, body: String) {
         val alertIntent = Intent(context, AlarmReceiver::class.java)
@@ -54,7 +54,6 @@ class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
         )
     }
 
-
     /* old shared method
     fun shareNote(note: Note) {
         val shareIntent = Intent(Intent.ACTION_SEND)
@@ -68,6 +67,8 @@ class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
     /* old delete note asynctask
     fun deleteNote(note: Note) {
         DeleteAsyncTask(appDatabase).execute(note)
+//        doAsync { appDatabase?.noteDao()?.deleteNote(note) }
+//        doAsync { appDatabase?.noteDao()?.update(note) }
     }
 
     class DeleteAsyncTask constructor(private var db: AppDatabase?) :

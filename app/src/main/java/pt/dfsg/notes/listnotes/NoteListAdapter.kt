@@ -1,6 +1,7 @@
 package pt.dfsg.notes.listnotes
 
 import android.content.Context
+import android.graphics.drawable.Animatable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -57,6 +58,13 @@ class NoteListAdapter(
             itemView.note_edit.setOnClickListener { clickCallBacks.onNoteEditClick(note) }
             itemView.note_delete.setOnClickListener { clickCallBacks.onNoteDeleteClick(note) }
             itemView.note_reminder.setOnClickListener { clickCallBacks.onSetReminderClick(note) }
+
+            val animate = itemView.note_anim.drawable as Animatable
+
+            itemView.note_anim.setOnClickListener {
+                animate.start()
+                animate.stop()
+            }
 
             itemView.cardView.setCardBackgroundColor(note.color)
         }

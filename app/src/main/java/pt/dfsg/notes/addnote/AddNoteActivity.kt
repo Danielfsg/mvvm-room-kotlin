@@ -110,7 +110,7 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
             Toast.makeText(this, "something", Toast.LENGTH_SHORT).show()
         else {
             if (color == 0) color = ContextCompat.getColor(this, R.color.White)
-            viewModel.addNoteAnko(
+            viewModel.addNote(
                 Note(
                     title = txt_note_title.text.toString(),
                     content = txt_note_content.text.toString(),

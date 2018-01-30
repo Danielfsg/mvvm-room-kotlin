@@ -74,6 +74,16 @@
                 tools:text="23:59:59" />
 
             <ImageButton
+                android:id="@+id/note_anim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:clickable="true"
+                android:focusable="true"
+                android:padding="5dp"
+                app:srcCompat="@drawable/avd_anim" />
+
+            <ImageButton
                 android:id="@+id/note_reminder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -120,7 +120,7 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     }
 
     private fun updateNote() {
-        viewModel.updateNoteAnko(
+        viewModel.updateNote(
             Note(
                 id = id.toLong(),
                 title = txt_note_title.text.toString(),
