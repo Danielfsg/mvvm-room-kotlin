@@ -14,6 +14,7 @@ import pt.dfsg.notes.db.Note
 import pt.dfsg.notes.notification.AlarmReceiver
 import pt.dfsg.notes.utils.ALERT_TEXT
 import pt.dfsg.notes.utils.ALERT_TITLE
+import pt.dfsg.notes.utils.ID
 
 
 class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
@@ -38,17 +39,20 @@ class NoteListViewModel constructor(app: Application) : AndroidViewModel(app) {
         async(CommonPool) { appDatabase?.noteDao()?.update(note) }.start()
     }
 
-    fun setAlarm(context: Context, alertTime: Long, title: String, body: String) {
+    fun setAlarm(context: Context, alertTime: Long, title: String, body: String, id: String) {
         val alertIntent = Intent(context, AlarmReceiver::class.java)
         alertIntent.putExtra(ALERT_TITLE, title)
         alertIntent.putExtra(ALERT_TEXT, body)
+        alertIntent.putExtra(ID, id)
 
         val manager: AlarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
         manager.set(
             AlarmManager.RTC_WAKEUP,
             alertTime,
             PendingIntent.getBroadcast(
-                context, 1, alertIntent,
+                context,
+                id.toInt(),
+                alertIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT
             )
         )
