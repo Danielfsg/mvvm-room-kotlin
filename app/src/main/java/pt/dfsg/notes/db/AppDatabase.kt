@@ -4,8 +4,9 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
+import pt.dfsg.notes.utils.DB_NAME
 
-@Database(entities = [(Note::class)], version = 3, exportSchema = false)
+@Database(entities = [(Note::class)], version = 4, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun noteDao(): NoteDao
@@ -18,7 +19,7 @@ abstract class AppDatabase : RoomDatabase() {
             if (dbInstance == null) {
                 dbInstance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java, "note-db"
+                    AppDatabase::class.java, DB_NAME
                 )
                     .fallbackToDestructiveMigration()
                     .build()

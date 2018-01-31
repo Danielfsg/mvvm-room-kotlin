@@ -102,7 +102,7 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     private fun setColor(value: Int) {
         color = ContextCompat.getColor(this, value)
-        cardView.setCardBackgroundColor(value)
+        cardView.setCardBackgroundColor(color)
     }
 
     private fun addNote() {
@@ -114,8 +114,9 @@ class AddNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 Note(
                     title = txt_note_title.text.toString(),
                     content = txt_note_content.text.toString(),
-                    date = date,
-                    color = color
+                    dateCreated = date,
+                    color = color,
+                    showContent = note_checkbox.isChecked
                 )
             )
             FancyToast.makeText(

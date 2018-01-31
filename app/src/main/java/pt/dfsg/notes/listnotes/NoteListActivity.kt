@@ -40,7 +40,7 @@ class NoteListActivity : AppCompatActivity(), View.OnClickListener,
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         day = calendar.get(Calendar.DAY_OF_MONTH)
-        hour = calendar.get(Calendar.HOUR_OF_DAY)
+        hour = calendar.get(Calendar.HOUR)
         minute = calendar.get(Calendar.MINUTE)
     }
 

@@ -89,32 +89,32 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.note_color_white -> {
-                color = ContextCompat.getColor(this, R.color.White)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.White)
             }
             R.id.note_color_red -> {
-                color = ContextCompat.getColor(this, R.color.Red)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.Red)
             }
             R.id.note_color_green -> {
-                color = ContextCompat.getColor(this, R.color.Green)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.Green)
             }
             R.id.note_color_blue -> {
-                color = ContextCompat.getColor(this, R.color.Blue)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.Blue)
             }
             R.id.note_color_yellow -> {
-                color = ContextCompat.getColor(this, R.color.Yellow)
-                cardView.setCardBackgroundColor(color)
+                setColor(R.color.Yellow)
             }
         }
+    }
+
+    private fun setColor(value: Int) {
+        color = ContextCompat.getColor(this, value)
+        cardView.setCardBackgroundColor(color)
     }
 
     private fun setNote(note: Note) {
         txt_note_title.setText(note.title, TextView.BufferType.EDITABLE)
         txt_note_content.setText(note.content, TextView.BufferType.EDITABLE)
-        btn_note_date.setText(dateFormat.format(note.date), TextView.BufferType.EDITABLE)
+//        btn_note_date.setText(dateFormat.format(note.date), TextView.BufferType.EDITABLE)
         cardView.setCardBackgroundColor(note.color)
         color = note.color
     }
@@ -125,7 +125,7 @@ class EditNoteActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener
                 id = id.toLong(),
                 title = txt_note_title.text.toString(),
                 content = txt_note_content.text.toString(),
-                date = date,
+                dateModified = date,
                 color = color
             )
         )

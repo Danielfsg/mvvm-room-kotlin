@@ -44,14 +44,19 @@ class NoteListAdapter(
         fun bind(note: Note) {
             val dateFormat: DateFormat = DateFormat.getDateInstance()
 
+            itemView.tag = note
+
             itemView.lbl_note_title.text = note.title
+            if (!note.showContent) itemView.lbl_note_content.visibility = View.GONE
+
             itemView.lbl_note_content.text = note.content
-            itemView.lbl_note_date.text = dateFormat.format(note.date)
+            itemView.lbl_note_date.text = dateFormat.format(note.dateCreated)
+
             if (note.hasReminder && note.reminder!! > Calendar.getInstance().time)
                 itemView.note_reminder_date.text = timeFormat().format(note.reminder)
             else
                 itemView.note_reminder_date.text = String()
-            itemView.tag = note
+
             itemView.setOnClickListener(onClickListener)
             itemView.note_share.setOnClickListener { clickCallBacks.onShareClick(note) }
             itemView.note_edit.setOnClickListener { clickCallBacks.onNoteEditClick(note) }

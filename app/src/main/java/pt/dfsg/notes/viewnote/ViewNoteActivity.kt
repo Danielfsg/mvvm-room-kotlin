@@ -23,7 +23,6 @@ class ViewNoteActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-
         val id = intent.getStringExtra(ID)
 
         viewModel = ViewModelProviders.of(this, ViewNoteViewModel.Factory(application, id))
@@ -37,7 +36,7 @@ class ViewNoteActivity : AppCompatActivity() {
         val dateFormat: DateFormat = DateFormat.getDateInstance()
         lbl_note_title.text = note.title
         lbl_note_content.text = note.content
-        lbl_note_date.text = dateFormat.format(note.date)
+        lbl_note_date.text = dateFormat.format(note.dateCreated)
         cardView.setCardBackgroundColor(note.color)
     }
 

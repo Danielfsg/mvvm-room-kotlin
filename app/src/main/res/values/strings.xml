@@ -21,4 +21,12 @@
 
     <string name="noti_channel_default">Default Channel</string>
     <string name="noti_channel_second">Secondary Channel</string>
+    <string name="choose_note_color">Choose Note Color:</string>
+    <string name="white">white</string>
+    <string name="red">red</string>
+    <string name="green">green</string>
+    <string name="blue">blue</string>
+    <string name="yellow">yellow</string>
+    <string name="privacy_settings">Privacy Settings:</string>
+    <string name="show_note_content">Show Note Content</string>
 </resources>
